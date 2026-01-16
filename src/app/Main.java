@@ -30,20 +30,36 @@ public class Main {
                     System.out.println("ID: ");
                     String id = scanner.nextLine();
 
-                    System.out.println("Usuário casdastrado com sucesso ");
+                   boolean sucesso = userService.cadastrar(new Usuario(nome, id));
 
-                    userService.cadastrar(new Usuario(nome, id));
+                   if (sucesso) {
+                       System.out.println("Usuário casdastrado com sucesso");
+                   }else {
+                       System.out.println("Dados incorretos, verifique e tente novamente.");
+                   }
                     break;
                 }
 
                 case 2: {
-                    userService.listar().forEach(u -> System.out.println("ID: " + u.getId() + " - " + "Nome: " +u.getNome())
-                    );
+                    if (userService.listar().isEmpty()){
+                        System.out.println("Nenhum usuário cadastrado ");
+                    }else {userService.listar().forEach(u -> System.out.println("Nome: " + u.getNome() + "\n" + "ID: " + u.getId() + "\n----------------")
+                         );
+                    }
                     break;
                 }
                 case 3: {
-                System.out.println("Qaul ID deseja remover? ");
+                System.out.println("Qual ID deseja remover? ");
+                System.out.println("\nUsuários cadastrados" + "\n");
+
+                if (userService.listar().isEmpty()){
+                    System.out.println("Nenhum usuário cadastrado");
+                } else {
+                    userService.listar().forEach(u -> System.out.println("Nome: " + u.getNome() + "\n" + "ID: " + u.getId() + "\n--------------"));
+                }
                 String id = scanner.nextLine();
+
+
 
                 if (userService.removerPorId(id)) {
                     System.out.println("Usuário removido com sucesso. ");

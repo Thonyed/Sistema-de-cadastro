@@ -8,8 +8,25 @@ public class UserService {
 
     private List<Usuario> usuarios = new ArrayList<>();
 
-    public void cadastrar(Usuario usuario) {
+    public boolean cadastrar (Usuario usuario){
+
+        if (usuario.getNome() == null || usuario.getNome().isBlank()){
+            return false;
+        }
+
+        if (usuario.getId() == null || usuario.getId().isBlank()){
+            return false;
+        }
+
+        boolean idExiste = usuarios.stream()
+        .anyMatch(u -> u.getId().equals(usuario.getId()));
+
+        if (idExiste) {
+            return false;
+        }
+
         usuarios.add(usuario);
+        return true;
     }
 
     public List<Usuario> listar() {
