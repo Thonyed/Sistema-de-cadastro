@@ -1,5 +1,6 @@
 package app;
 
+import exception.RegraNegocioException;
 import model.Usuario;
 import service.UserService;
 
@@ -30,13 +31,12 @@ public class Main {
                     System.out.println("ID: ");
                     String id = scanner.nextLine();
 
-                   boolean sucesso = userService.cadastrar(new Usuario(nome, id));
-
-                   if (sucesso) {
-                       System.out.println("Usuário casdastrado com sucesso");
-                   }else {
-                       System.out.println("Dados incorretos, verifique e tente novamente.");
-                   }
+                    try {
+                        userService.cadastrar(new Usuario(nome, id));
+                        System.out.println("Usuario cadastrado com sucesso");
+                    } catch (RegraNegocioException e) {
+                        System.out.println("Erro: " + e.getMessage());
+                    }
                     break;
                 }
 

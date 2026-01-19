@@ -3,6 +3,8 @@ package service;
 import model.Usuario;
 import java.util.ArrayList;
 import java.util.List;
+import exception.RegraNegocioException;
+
 
 public class UserService {
 
@@ -11,18 +13,18 @@ public class UserService {
     public boolean cadastrar (Usuario usuario){
 
         if (usuario.getNome() == null || usuario.getNome().isBlank()){
-            return false;
+            throw new RegraNegocioException("Nome não pode ser vazio");
         }
 
         if (usuario.getId() == null || usuario.getId().isBlank()){
-            return false;
+            throw new RegraNegocioException("ID não pode ser vazio");
         }
 
         boolean idExiste = usuarios.stream()
         .anyMatch(u -> u.getId().equals(usuario.getId()));
 
         if (idExiste) {
-            return false;
+            throw new RegraNegocioException("ID já existe");
         }
 
         usuarios.add(usuario);
